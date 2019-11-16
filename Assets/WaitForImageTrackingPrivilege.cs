@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.MagicLeap;
+using MagicLeapInternal;
 
 public class WaitForImageTrackingPrivilege : MonoBehaviour
 {
 	private PrivilegeRequester _privilegeRequester;
 	public TrackSensorPosition trackerSensorPos;
+	public TrackSensorPosition trackerSensorPos2;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -31,6 +33,7 @@ public class WaitForImageTrackingPrivilege : MonoBehaviour
 			return;
 		}
 		trackerSensorPos.gameObject.SetActive(true);
+		trackerSensorPos2.gameObject.SetActive(true);
 		Debug.Log("Succeeded in requesting all privileges");
 	}
 }

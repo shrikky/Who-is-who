@@ -115,10 +115,10 @@ namespace MagicLeap
         /// </summary>
         void UpdateVisualizers()
         {
-            foreach (ImageTrackingVisualizer visualizer in _visualizers)
-            {
-                visualizer.UpdateViewMode(_viewMode);
-            }
+            //foreach (ImageTrackingVisualizer visualizer in _visualizers)
+            //{
+            //    visualizer.UpdateViewMode(_viewMode);
+            //}
         }
 
         /// <summary>

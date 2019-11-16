@@ -1,22 +1,35 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class SendRecvWebRequests : MonoBehaviour
 {
-	readonly string getURL = "http://b94c3ed9.ngrok.io/whoswho/tracker";
-	readonly string postURL = "http://b94c3ed9.ngrok.io/whoswho/patientData";
+	readonly string getURL = "http://idcards2go.ngrok.io/all";
+	readonly string postURL = "http://0cda2668.ngrok.io/whoswho/patientData";
 
-	public class TestJson
+
+	[Serializable]
+	public class PatientData
 	{
-		public int age;
-		public string name;
+		public string Pid;
+		public string Name;
+		public string Age;
+		public string BPD;
+		public string BPS;
+		public string Pulse;
+		public string Observation;
+		public string PhoneNumber;
+		public string EmergencyContact;
+		public string Address;
+		public string Health;
 	}
-
+	public List<PatientData> cacheData = new List<PatientData>();
 	public class RecvJson
 	{
 		public string name;
@@ -28,37 +41,39 @@ public class SendRecvWebRequests : MonoBehaviour
 		/// A correct website page.
 		//StartCoroutine(PostJson(postURL, patientData));
 
-		// A non-existing page.
 		StartCoroutine(GetRequest(getURL));
 	}
 
-	private void Update()
-	{
 
-	}
 	IEnumerator GetRequest(string uri)
 	{
-		using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+		while (true)
 		{
-			// Request and wait for the desired page.
-			webRequest.GetRequestHeader("application/json");
-			webRequest.GetResponseHeader("application/json");
-			yield return webRequest.SendWebRequest();
-
-			string[] pages = uri.Split('/');
-			int page = pages.Length - 1;
-
-			if (webRequest.isNetworkError)
+			using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
 			{
-				Debug.Log(pages[page] + ": Error: " + webRequest.error);
+				// Request and wait for the desired page.
+				webRequest.GetRequestHeader("application/json");
+				webRequest.GetResponseHeader("application/json");
+				yield return webRequest.SendWebRequest();
+
+				string[] pages = uri.Split('/');
+				int page = pages.Length - 1;
+
+				if (webRequest.isNetworkError)
+				{
+					Debug.Log(pages[page] + ": Error: " + webRequest.error);
+				}
+				else
+				{
+					Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+					var data = webRequest.downloadHandler.text;
+
+					cacheData = JsonConvert.DeserializeObject<List<PatientData>>(data);
+					//Debug.Log(output.Name);
+				}
 			}
-			else
-			{
-				Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
-				var data = webRequest.downloadHandler.text;
-				var output = JsonUtility.FromJson<RecvJson>(data);
-				Debug.Log(output.name);
-			}
+			yield return new WaitForSeconds(5);
+			Debug.Log("List size is " + cacheData.Count);
 		}
 	}
 
@@ -74,55 +89,6 @@ public class SendRecvWebRequests : MonoBehaviour
 
 		return obj;
 	}
-
-	IEnumerator PostRequest(string uri)
-	{
-		int score = 40;
-		List<IMultipartFormSection> data = new List<IMultipartFormSection>();
-		data.Add(new MultipartFormDataSection("curScoreKey", score.ToString()));
-
-		using (UnityWebRequest webRequest = UnityWebRequest.Post(uri, data))
-		{
-			// Request and wait for the desired page.
-			//webRequest.SetRequestHeader("Content-Type", "application/json");
-			yield return webRequest.SendWebRequest();
-
-			if (webRequest.isNetworkError || webRequest.isHttpError)
-			{
-				Debug.Log(webRequest.error);
-			}
-			else
-			{
-				Debug.Log("Form upload complete!");
-			}
-		}
-	}
-
-	//IEnumerator PostJson(string uri, PatientData_1 jsonData)
-	//{
-	//	string data = JsonUtility.ToJson(jsonData);
-	//	var byteData = Encoding.ASCII.GetBytes(data);
-			
-
-	//	using (UnityWebRequest webRequest = UnityWebRequest.Put(uri, byteData))
-	//	{
-	//		webRequest.method = UnityWebRequest.kHttpVerbPUT;
-	//		webRequest.SetRequestHeader("Content-Type", "application/json");
-
-	//		yield return webRequest.SendWebRequest();
-
-	//		if (webRequest.isNetworkError || webRequest.isHttpError)
-	//		{
-	//			Debug.Log(webRequest.error);
-	//		}
-	//		else
-	//		{
-				
-	//			Debug.Log(webRequest.responseCode);
-	//			Debug.Log("Form upload complete!");
-	//		}
-	//	}
-	//}
 
 	public T FromByteArray<T>(byte[] data)
 	{

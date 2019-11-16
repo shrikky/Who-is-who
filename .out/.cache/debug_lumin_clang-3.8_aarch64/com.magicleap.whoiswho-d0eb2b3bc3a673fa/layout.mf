@@ -24,6 +24,10 @@
   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/MSA.Runtime.dll"
  },
  {
+  "dest": "bin/Newtonsoft.Json.dll",
+  "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/Newtonsoft.Json.dll"
+ },
+ {
   "dest": "bin/UnityMagicLeap.so",
   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/UnityMagicLeap.so"
  },

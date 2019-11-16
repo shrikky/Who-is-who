@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageTracker: {fileID: 6541536264918565542}
-  RandomCube: {fileID: 0}
 --- !u!114 &6541536264918565542
 MonoBehaviour:
   m_ObjectHideFlags: 0
