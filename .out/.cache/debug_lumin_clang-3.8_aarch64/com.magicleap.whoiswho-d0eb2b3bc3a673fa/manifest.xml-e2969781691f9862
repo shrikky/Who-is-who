@@ -1,5 +1,5 @@
 <manifest xmlns:ml="magicleap" ml:developer_id="df508b59-f43e-4b24-aea4-46ebd7870d66" ml:package="com.magicleap.whoiswho" ml:version_code="1" ml:version_name="">
-  <application ml:min_api_level="6" ml:sdk_version="1.0" ml:visible_name="whoiswho">
+  <application ml:min_api_level="7" ml:sdk_version="1.0" ml:visible_name="whoiswho">
     <component ml:binary_name="bin/Player.elf" ml:name=".fullscreen" ml:type="Fullscreen" ml:visible_name="whoiswho">
       <icon ml:model_folder="Icon/Model" ml:portal_folder="Icon/Portal" />
     </component>
@@ -10,7 +10,9 @@
     <uses-privilege ml:name="PcfRead" />
     <uses-privilege ml:name="LocalAreaNetwork" />
     <uses-privilege ml:name="CameraCapture" />
+    <uses-privilege ml:name="CoarseLocation" />
     <uses-privilege ml:name="ComputerVision" />
+    <uses-privilege ml:name="WifiStatusRead" />
     <uses-privilege ml:name="WorldReconstruction" />
   </application>
 </manifest>

@@ -5,7 +5,7 @@
    "hash": "5925de9f4d7b83c65d1fd7b25ced5f0bf8c27e73",
    "pkgpath": "bin/libc++_shared.so",
    "size": 976832,
-   "src": "C:/Users/lvijayaraghavan/MagicLeap/mlsdk/v0.22.0/lumin/stl/libc++/lib/libc++_shared.so",
+   "src": "C:/Users/lvijayaraghavan/MagicLeap/mlsdk/v0.23.0/mlsdk/lumin/stl/libc++/lib/libc++_shared.so",
    "xfrm_flags": {
     "signed": {
      "cert": "C:\\Cert\\ML1Creator\\ml1creatoredition.cert"
@@ -17,21 +17,21 @@
     }
    },
    "xfrm_hash": "f9e97f59d649b90d85783efedec0e92d3a3a94c4",
-   "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\libc++_shared.so-cf64457309456761",
+   "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\libc++_shared.so-686dbdbf2e106041",
    "xfrm_size": 977590
   },
   {
    "compression": 8,
-   "hash": "72fa221f5500fa58aa9cf60abb718cebc1751a54",
+   "hash": "a08aea4d2ebdf69e2f8ea8eb7d8f7f659154ffe3",
    "pkgpath": "Data/Managed/Metadata/global-metadata.dat",
-   "size": 5651108,
+   "size": 6414580,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Managed/Metadata/global-metadata.dat"
   },
   {
    "compression": 8,
-   "hash": "c85ed49658c0a74c57bb00e1864e14c07f996142",
+   "hash": "f53425e5eaeea2dd7ce50828a176c5f1f493ca3f",
    "pkgpath": "bin/libil2cpp.so",
-   "size": 93378488,
+   "size": 103901408,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Native/libil2cpp.so",
    "xfrm_flags": {
     "signed": {
@@ -43,15 +43,15 @@
      "version": 3
     }
    },
-   "xfrm_hash": "cb23f2a5239fc93ec63e3a8ba88997795250e082",
+   "xfrm_hash": "ba8ba04c4a43ff39179ce11070492e14553ab0b1",
    "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\libil2cpp.so-b8b6f45b5df3a2e8",
-   "xfrm_size": 93379246
+   "xfrm_size": 103902166
   },
   {
    "compression": 8,
-   "hash": "fa2b8ff146caf64688e7aa835af0034ca81b5505",
+   "hash": "eb463901d6f69c739181911a175309562ca388ce",
    "pkgpath": "bin/AudioPluginMSASpatializer.so",
-   "size": 282448,
+   "size": 286544,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/AudioPluginMSASpatializer.so",
    "xfrm_flags": {
     "signed": {
@@ -63,29 +63,29 @@
      "version": 3
     }
    },
-   "xfrm_hash": "e8389e2827d08e7319a5398586310cc036c6a866",
+   "xfrm_hash": "646d2b08d3152ebeb1caaa15b54c889542d7d587",
    "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\AudioPluginMSASpatializer.so-ff6fda20d409e55d",
-   "xfrm_size": 283206
+   "xfrm_size": 287302
   },
   {
    "compression": 8,
-   "hash": "40b2e9e56693ce50c69e1c8f325a39ef97a6ec55",
+   "hash": "6e97746669365994fc51f0e1a6208dfe79641c9b",
    "pkgpath": "bin/LuminMediaPlayer.dll",
-   "size": 68096,
+   "size": 68608,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/LuminMediaPlayer.dll"
   },
   {
    "compression": 8,
-   "hash": "150d14808db8c374cbb990a751cb23ffb31b3e2d",
+   "hash": "d14df8398fab95251d52360ccaa2a70c2a0da718",
    "pkgpath": "bin/LuminUnity.dll",
-   "size": 329216,
+   "size": 327680,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/LuminUnity.dll"
   },
   {
    "compression": 8,
-   "hash": "b8ce049d2e85f27cc7346d7551d1853b20e78461",
+   "hash": "51f119b9d8bb1803df4f0e0ead2656f6fbba374b",
    "pkgpath": "bin/MSA.Runtime.dll",
-   "size": 22016,
+   "size": 22528,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/MSA.Runtime.dll"
   },
   {
@@ -94,6 +94,13 @@
    "pkgpath": "bin/Newtonsoft.Json.dll",
    "size": 399360,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/Newtonsoft.Json.dll"
+  },
+  {
+   "compression": 8,
+   "hash": "b6680cb9e43869ff110e0d422ae4892da9eeb120",
+   "pkgpath": "bin/Photon3Unity3D.dll",
+   "size": 184320,
+   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/Photon3Unity3D.dll"
   },
   {
    "compression": 8,
@@ -117,7 +124,7 @@
   },
   {
    "compression": 8,
-   "hash": "fbfa4a6aa20b14e0f60550676e5d34bebb99d46d",
+   "hash": "a86c27fcbaa2b90e59a995a472f69b8736524c2e",
    "pkgpath": "bin/libml_camera_plugin.so",
    "size": 14184,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/libml_camera_plugin.so",
@@ -131,15 +138,15 @@
      "version": 3
     }
    },
-   "xfrm_hash": "0b83240d0d8f2ae17fb88278f7a99a640f6a5f20",
+   "xfrm_hash": "d13049df11a36c569a17bb3c7afb6d5397e4809b",
    "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\libml_camera_plugin.so-ff6fda20d409e55d",
    "xfrm_size": 14942
   },
   {
    "compression": 8,
-   "hash": "88ac1047e0ac5686d703471c3115f719ca66a4e8",
+   "hash": "1d1daf0c329d1182bee0bcc2986e0368b2227511",
    "pkgpath": "bin/libml_mediaplayer_plugin.so",
-   "size": 67624,
+   "size": 72064,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/libml_mediaplayer_plugin.so",
    "xfrm_flags": {
     "signed": {
@@ -151,9 +158,9 @@
      "version": 3
     }
    },
-   "xfrm_hash": "a3132c793a6f7edc328bd6b56bb79cc692407c5f",
+   "xfrm_hash": "c9c0b1947e8c5d0b7f47e829be188699cae3081f",
    "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\libml_mediaplayer_plugin.so-ff6fda20d409e55d",
-   "xfrm_size": 68382
+   "xfrm_size": 72822
   },
   {
    "compression": 8,
@@ -206,44 +213,51 @@
   },
   {
    "compression": 8,
-   "hash": "7cc2a1c4ec9c935de8b8a4ce0b72e84477e796b0",
+   "hash": "9215ef305505f12cdb936f14d6b110629b3b2b23",
    "pkgpath": "Data/globalgamemanagers",
-   "size": 67664,
+   "size": 383528,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/globalgamemanagers"
   },
   {
    "compression": 8,
-   "hash": "7e89ff3b8b28c93d4f89f56caec480cac00b9937",
+   "hash": "57bfc57ca19568172704e38a4c398b269b5e3dd6",
    "pkgpath": "Data/globalgamemanagers.assets",
-   "size": 101836,
+   "size": 135164,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/globalgamemanagers.assets"
   },
   {
    "compression": 8,
-   "hash": "42bc6d56e23600341728c06382a4365e62fa91e5",
+   "hash": "7e17f4b4e45f6acbcb4fec89568e42f618847ff2",
    "pkgpath": "Data/level0",
-   "size": 34552,
+   "size": 5612,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/level0"
   },
   {
    "compression": 8,
-   "hash": "d77f8f429538b0447fbd80575d586bd3b7f59a66",
-   "pkgpath": "Data/level0.resS",
-   "size": 131232,
-   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/level0.resS"
+   "hash": "c782c92d27ff64e0dc9dad7b2cdd66d4385a0fdb",
+   "pkgpath": "Data/level1",
+   "size": 7548,
+   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/level1"
   },
   {
    "compression": 8,
-   "hash": "236c4b55da9866b4efcabba57467fdb648e3cbec",
+   "hash": "d77f8f429538b0447fbd80575d586bd3b7f59a66",
+   "pkgpath": "Data/level1.resS",
+   "size": 131232,
+   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/level1.resS"
+  },
+  {
+   "compression": 8,
+   "hash": "1e63b0914d7819aa621f0ca6ed541cffff889c9f",
    "pkgpath": "Data/resources.assets",
-   "size": 1172664,
+   "size": 5465312,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/resources.assets"
   },
   {
    "compression": 8,
-   "hash": "6dc6cda6915df28fd6a4b059cb98ab7479fa3841",
+   "hash": "45da759726df0877fb0dc46f2c9020ade6e3251e",
    "pkgpath": "Data/resources.assets.resS",
-   "size": 710032,
+   "size": 8475744,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/resources.assets.resS"
   },
   {
@@ -255,17 +269,17 @@
   },
   {
    "compression": 8,
-   "hash": "c00f80e44615d6adcb42e5df05411bd5b2148bb6",
+   "hash": "269ec32cf61774054d2a877c7697cb93f9f5b6b2",
    "pkgpath": "Data/sharedassets0.assets",
-   "size": 972228,
+   "size": 25784,
    "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/sharedassets0.assets"
   },
   {
    "compression": 8,
-   "hash": "241918b75b937786869caf59f15bb862d48b8114",
-   "pkgpath": "Data/sharedassets0.assets.resS",
-   "size": 1054036,
-   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/sharedassets0.assets.resS"
+   "hash": "defdce8733852a4ce22395a0bcc75a89df37e3d8",
+   "pkgpath": "Data/sharedassets1.assets",
+   "size": 6148,
+   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/sharedassets1.assets"
   },
   {
    "compression": 8,
@@ -289,9 +303,9 @@
   },
   {
    "compression": 8,
-   "hash": "f4e98aa1408ea0bd54d50643da9d1b3fb3e55dae",
+   "hash": "584e4a050e8c9fef57345efd29b1dcc503f9f69a",
    "pkgpath": "manifest.xml",
-   "size": 918,
+   "size": 1016,
    "src": "C:\\Users\\lvijayaraghavan\\Projects\\Who is who\\Who-is-who\\Temp\\StagingArea\\manifest.xml",
    "xfrm_flags": {
     "manifest": {
@@ -299,9 +313,9 @@
      "developer_id": "df508b59-f43e-4b24-aea4-46ebd7870d66"
     }
    },
-   "xfrm_hash": "c8e081642304552853e94bc0c9c2345470bc729b",
+   "xfrm_hash": "51ae0d0e5c28b4dc435874cc10883e270cb48434",
    "xfrm_path": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/.out/.cache/debug_lumin_clang-3.8_aarch64/com.magicleap.whoiswho-d0eb2b3bc3a673fa\\manifest.xml-e2969781691f9862",
-   "xfrm_size": 930
+   "xfrm_size": 1028
   }
  ],
  "pkgflags": {

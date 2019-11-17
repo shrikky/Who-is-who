@@ -12,13 +12,16 @@ namespace UDP
 	{
 		private Socket _udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 		private Socket _tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		private const int bufSize = 12;
+		private const int bufSize = 8 * 1024;
 		private State state = new State();
 		private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
 		private AsyncCallback recv = null;
 		//private KeyValuePair<int, Vector3> _inputStreamData;
 		public Queue<KeyValuePair<int, Vector3>> _inputStreamData;
 		public UIPositionManager dataManager;
+		Vector3 objPos = Vector3.zero;
+		public GameObject cube;
+		private object vecLock = new object();
 		public class State
 		{
 			public byte[] buffer = new byte[bufSize];
@@ -26,6 +29,7 @@ namespace UDP
 
 		public void InitConnectionToRaspberryPI(string address, int port)
 		{
+			//_tcpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 			_tcpSocket.Connect(IPAddress.Parse(address), port);  //3300 TCP connect
 		}
 
@@ -35,12 +39,6 @@ namespace UDP
 			_udpSocket.Bind(new IPEndPoint(IPAddress.Any, port));
 			Receive();
 		}
-
-		//public void InitConnectionToServer(string address, int port)
-		//{
-		//	_udpSocket.Connect(IPAddress.Parse(address), port);
-		//	Receive();
-		//}
 
 		public void SendViaTCP(string text)
 		{
@@ -71,9 +69,15 @@ namespace UDP
 				State so = (State)ar.AsyncState;			
 				int bytes = _udpSocket.EndReceiveFrom(ar, ref epFrom);
 				_udpSocket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
-				Debug.LogFormat("RECV: {0}: {1}, {2}", epFrom.ToString(), bytes, Encoding.ASCII.GetString(so.buffer, 0, bytes));
+				//Debug.LogFormat("RECV: {0}: {1}, {2}", epFrom.ToString(), bytes, Encoding.ASCII.GetString(so.buffer, 0, bytes));
 				var displayData = Encoding.ASCII.GetString(so.buffer, 0, bytes);
-				//var data = DeSerialize(so.buffer);
+				var keyvalpair = DeSerializeRFIDAndVec(so.buffer);
+				lock (vecLock)
+				{
+					objPos.x = keyvalpair.Value.x;
+					objPos.y = keyvalpair.Value.z;
+					objPos.z = keyvalpair.Value.y;
+				}
 				//dataManager.SetUIData(data);
 			}, state);
 			
@@ -85,8 +89,9 @@ namespace UDP
 			InitConnectionToRaspberryPI("172.17.4.58", 3300); // Initialize connection by sending a message to 3300 port
 			SendViaTCP("S 3301");
 			ListenForData("127.0.0.1", 3301);  // Start listening on 3301
+			cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			
 		}
-
 		public static byte[] SerializeVec(Vector3[] vect)
 		{
 			byte[] buff = new byte[sizeof(float) * 3 * vect.Length];  //3 * 4 * 3 = 36 bbytes
@@ -109,14 +114,33 @@ namespace UDP
 				_udpSocket.Shutdown(SocketShutdown.Both);
 				_udpSocket.Close();
 			}
+
+			lock (vecLock)
+			{
+				cube.transform.position = objPos;
+			}
 		}
 		public void OnApplicationQuit()
 		{
-			_tcpSocket.Shutdown(SocketShutdown.Both);
+				_tcpSocket.Shutdown(SocketShutdown.Both);
 				_tcpSocket.Close();
 				_udpSocket.Shutdown(SocketShutdown.Both);
 				_udpSocket.Close();
 		}
+		public static KeyValuePair<int,Vector3> DeSerializeRFIDAndVec(byte[] data)
+		{
+			byte[] buff = data;
+			int RFID = 0;
+			Vector3 vect;
+			vect.x = BitConverter.ToSingle(buff, 1 * sizeof(float));
+			vect.y = BitConverter.ToSingle(buff, 2 * sizeof(float));
+			vect.z = BitConverter.ToSingle(buff, 3 * sizeof(float));
+			RFID = BitConverter.ToInt32(buff, 0 * sizeof(int));
+			KeyValuePair<int, Vector3> pairdata = new KeyValuePair<int, Vector3>(RFID, vect);
+			//Debug.Log(pairdata.Key + " " + pairdata.Value);
+			return pairdata;
+		}
+
 		public static Vector3[] DeSerialize(byte[] data)
 		{
 			byte[] buff = data;
