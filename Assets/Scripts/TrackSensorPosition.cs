@@ -8,16 +8,14 @@ public class TrackSensorPosition : MonoBehaviour
 {
 	// Start is called before the first frame update
 	
-	public MLImageTrackerBehavior imageTracker;
+
 	public GameObject TrackedUI;
 	public int TrackerID;
 	public SendRecvWebRequests webData;
 	public VitalDisplayData display;
 	void Start()
     {
-		imageTracker.LongerDimensionInSceneUnits = 0.135f;
-		imageTracker.OnTargetFound += OnImageTargetFound;
-		imageTracker.OnTargetUpdated += OnTargetUpdated;
+		
 	
 		// If not listed here, the PrivilegeRequester assumes the request for
 		// the privileges needed, CameraCapture in this case, are in the editor.

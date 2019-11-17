@@ -1,7 +1,7 @@
 [
  {
   "dest": "bin/libc++_shared.so",
-  "src": "C:/Users/lvijayaraghavan/MagicLeap/mlsdk/v0.22.0/lumin/stl/libc++/lib/libc++_shared.so"
+  "src": "C:/Users/lvijayaraghavan/MagicLeap/mlsdk/v0.23.0/mlsdk/lumin/stl/libc++/lib/libc++_shared.so"
  },
  {
   "dest": "bin/libil2cpp.so",
@@ -26,6 +26,10 @@
  {
   "dest": "bin/Newtonsoft.Json.dll",
   "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/Newtonsoft.Json.dll"
+ },
+ {
+  "dest": "bin/Photon3Unity3D.dll",
+  "src": "C:/Users/lvijayaraghavan/Projects/Who is who/Who-is-who/Temp/StagingArea/Data/Plugins/Photon3Unity3D.dll"
  },
  {
   "dest": "bin/UnityMagicLeap.so",
