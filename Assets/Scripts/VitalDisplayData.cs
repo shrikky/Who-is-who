@@ -6,17 +6,17 @@ using TMPro;
 public class VitalDisplayData : MonoBehaviour
 {
 	public TextMeshProUGUI PatientName;
-	public TextMeshProUGUI BPD;
-	public TextMeshProUGUI BPS;
+	public TextMeshProUGUI BP;
+	public TextMeshProUGUI Location;
 	public TextMeshProUGUI Pulse;
 	public TextMeshProUGUI Observation;
 
 
-	public void DisplayToUI(string patientName = null, string bpd = null, string bps = null, string pulse = null, string obs = null)
+	public void DisplayToUI(string patientName = null, string bp = null, string location = null, string pulse = null, string obs = null)
 	{
 		PatientName.text = patientName;
-		BPD.text = bpd;
-		BPS.text = bps;
+		BP.text = bp;
+		Location.text = location;
 		Pulse.text = pulse;
 		Observation.text = obs;
 	}

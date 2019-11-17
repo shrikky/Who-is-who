@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400000, guid: caf0c625b0e6ba840a163e8620675251, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -58,7 +58,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Heart_Controller
+  m_Name: LocationMark_Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Live
@@ -101,7 +101,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bc632cb77f286474fb116aab5caedaf2, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1fc3242c82ed82e4c892f3d49648fadb, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
