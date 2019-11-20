@@ -3,6 +3,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UDP;
 using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 using CFUID = MagicLeapInternal.MagicLeapNativeBindings.MLCoordinateFrameUID;
@@ -16,13 +17,14 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 	private List<GameObject> _pcfObjs = new List<GameObject>();
 	private int _ongoingQueriesCount;
 	private PrivilegeRequester _privilegeRequester;
+	private MLPCF _closestPCF;
+	private GameObject closestPCFGameObject;
 	protected PhotonView pv;
+	private GameObject NetworkUI;
 	public delegate void ObtainPCFsCallback();
 	public static event ObtainPCFsCallback OnPCFsObtained;
-	public CFUID closestPCFCFUID;
-	public MLPCF closestPCF;
-	private GameObject closestPCFGameObject;
-
+	public string closestPCFCFUID;
+	public SocketConnection sockConnection;
 	public static bool IsDebugMode
 	{
 		get; private set;
@@ -34,6 +36,15 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 	private void Start()
 	{
 		pv = GetComponent<PhotonView>();
+		if (pv.IsMine)
+		{
+			NetworkUI = PhotonNetwork.Instantiate("UISync", transform.position, transform.rotation);
+			Debug.Log("NetworkUISync object is spawned");
+		}
+		else
+		{
+			NetworkUI = GameObject.FindObjectOfType<NetworkUISync>().gameObject;
+		}
 		_findAllPCFs = FindAllPCFs();
 		if (_PCFVizPrefab == null)
 		{
@@ -67,6 +78,7 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 			MLInput.Start();
 		}
 		MLInput.OnControllerButtonDown += HandleControllerButtonDown;
+	
 	}
 
 	private void HandleControllerButtonDown(byte controllerId, MLInputControllerButton button)
@@ -82,8 +94,8 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 		}
 		if (button == MLInputControllerButton.Bumper)
 		{
-			if (pv.IsMine)
-				FindNearestPCF();
+			//if (pv.IsMine)
+			//	FindNearestPCF();
 		}
 	}
 
@@ -146,6 +158,7 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 
 		PhotonNetwork.Instantiate("PCFVisual", pcf.Position, pcf.Orientation);
 	}
+
 	private void HandlePCFPositionQuery(MLResult result, MLPCF pcf)
 	{
 		//if (result.IsOk)
@@ -157,6 +170,7 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 		//}
 		--_ongoingQueriesCount;
 	}
+
 	private IEnumerator FindAllPCFs()
 	{
 		float timer = 5;
@@ -197,22 +211,39 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 		{
 			Debug.Log("No pcfs in the list");
 		}
-		closestPCF = PCFList.Find(x => x.CFUID == closestPCFCFUID);
-		MLPersistentCoordinateFrames.GetPCFPose(closestPCF, AssignClosestPCF);
+		_closestPCF = PCFList.Find(x => x.CFUID.ToString() == closestPCFCFUID);
+		if(_closestPCF == null)
+			Debug.Log("Cannot find the closestPCF");
+
+		MLPersistentCoordinateFrames.GetPCFPose(_closestPCF, AssignClosestPCF);
+	}
+	public void SetUserPosition(Vector3 vec)
+	{
+		if (closestPCFGameObject != null && NetworkUI!=null)
+		{
+			NetworkUI.GetComponent<NetworkUISync>().SetUserPosition(vec);
+		}
+		else
+		{
+			Debug.Log("Closest PCF is not yet set for syncing positions");
+			if(NetworkUI == null)
+			{
+				Debug.Log("Finding Network UI");
+				NetworkUI = GameObject.FindObjectOfType<NetworkUISync>().gameObject;
+			}
+		}
 	}
 	private void AssignClosestPCF(MLResult result, MLPCF pcf)
 	{
 		if (result.IsOk)
 		{
 			MLPersistentCoordinateFrames.QueueForUpdates(pcf);
-			closestPCF = pcf;
+			_closestPCF = pcf;
 			closestPCFGameObject = new GameObject();
-			closestPCFGameObject.transform.position = closestPCF.Position;
-			closestPCFGameObject.transform.rotation = closestPCF.Orientation;
-			Debug.Log("Found closest PCF " + closestPCF.Position + " " + closestPCF.CFUID);
-
-			if (PhotonNetwork.IsMasterClient)
-				pv.RPC("SyncClosestPCF", RpcTarget.OthersBuffered, closestPCF.CFUID);
+			closestPCFGameObject.transform.position = _closestPCF.Position;
+			closestPCFGameObject.transform.rotation = _closestPCF.Orientation;
+			Debug.Log("Found closest PCF " + _closestPCF.Position + " " + _closestPCF.CFUID);
+			NetworkUI.GetComponent<NetworkUISync>().closestPCFGameobject = closestPCFGameObject;
 		}
 	}
 
@@ -259,6 +290,7 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 			 };
 		_privilegeRequester.OnPrivilegesDone += HandlePrivilegesDone;
 	}
+
 	private void HandlePrivilegesDone(MLResult result)
 	{
 		if (!result.IsOk)

@@ -18,10 +18,12 @@ namespace UDP
 		private AsyncCallback recv = null;
 		//private KeyValuePair<int, Vector3> _inputStreamData;
 		public Queue<KeyValuePair<int, Vector3>> _inputStreamData;
-		public UIPositionManager dataManager;
-		Vector3 objPos = Vector3.zero;
-		public GameObject cube;
+		Vector3 RFIDSpace_position = Vector3.zero;
 		private object vecLock = new object();
+		public NetworkPCFPersistence pcfPersistence;
+		GameObject cube;
+		GameObject cube1;
+		GameObject cube2;
 		public class State
 		{
 			public byte[] buffer = new byte[bufSize];
@@ -74,11 +76,11 @@ namespace UDP
 				var keyvalpair = DeSerializeRFIDAndVec(so.buffer);
 				lock (vecLock)
 				{
-					objPos.x = keyvalpair.Value.x;
-					objPos.y = keyvalpair.Value.z;
-					objPos.z = keyvalpair.Value.y;
+					RFIDSpace_position.x = keyvalpair.Value.x;
+					RFIDSpace_position.y = keyvalpair.Value.z;
+					RFIDSpace_position.z = keyvalpair.Value.y;
 				}
-				//dataManager.SetUIData(data);
+			
 			}, state);
 			
 	
@@ -86,11 +88,17 @@ namespace UDP
 
 		public void Start()
 		{
+			if (PlayerType.ID != 1)
+				return;
+
 			InitConnectionToRaspberryPI("172.17.4.58", 3300); // Initialize connection by sending a message to 3300 port
 			SendViaTCP("S 3301");
 			ListenForData("127.0.0.1", 3301);  // Start listening on 3301
-			cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			
+			//cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//cube1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//cube1.transform.position = Vector3.zero;
+			//cube2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//cube2.transform.position = new Vector3(1,0,0);
 		}
 		public static byte[] SerializeVec(Vector3[] vect)
 		{
@@ -117,7 +125,9 @@ namespace UDP
 
 			lock (vecLock)
 			{
-				cube.transform.position = objPos;
+				//cube.transform.position = RFIDSpace_position;
+				pcfPersistence?.SetUserPosition(RFIDSpace_position);
+				//NetworkUI?.SetUserPosition(objPos);
 			}
 		}
 		public void OnApplicationQuit()
@@ -137,7 +147,7 @@ namespace UDP
 			vect.z = BitConverter.ToSingle(buff, 3 * sizeof(float));
 			RFID = BitConverter.ToInt32(buff, 0 * sizeof(int));
 			KeyValuePair<int, Vector3> pairdata = new KeyValuePair<int, Vector3>(RFID, vect);
-			//Debug.Log(pairdata.Key + " " + pairdata.Value);
+			Debug.Log(pairdata.Key + " " + pairdata.Value);
 			return pairdata;
 		}
 

@@ -63,17 +63,28 @@ public class PhotonRoom : MonoBehaviour, IInRoomCallbacks, IMatchmakingCallbacks
 	private void StartGame()
 	{
 		isGameLoaded = true;
+
 		if (!PhotonNetwork.IsMasterClient)
-		{			return;
+		{
+			PlayerType.ID = 2;
+			Debug.Log("SETPLAYER ID " + 2);
+			return;
 		}
 
 		if (maxPlayers == playersInRoom)
 		{
+			PlayerType.ID = 1;
+			Debug.Log("SETPLAYER ID " + 1);
 			PhotonNetwork.LoadLevel(1);
 		}
 
 	}
 
+	public IEnumerator LoadNewLevel()
+	{
+		yield return new WaitForSeconds(1);
+	
+	}
 	public void OnPlayerLeftRoom(Player otherPlayer)
 	{
 		Debug.Log("Player left room");

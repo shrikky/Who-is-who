@@ -6,8 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/HelloCube.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Menu.unity
+    guid: 50080540b82bf6c458ab23e6dacda994
+  - enabled: 1
+    path: Assets/Scenes/TestScene.unity
+    guid: 769fc81583ec83e47894f1cba8bb03f8
   m_configObjects:
+    com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 19ec12ef02ea885438b4d24d5beda116,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2ba4dbd235ed941bb8fdb5a40ab00f22,
       type: 2}
