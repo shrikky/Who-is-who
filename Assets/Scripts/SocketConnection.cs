@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace UDP
 {
-	public class SocketConnection : MonoBehaviour
+	public class SocketConnection : PhotonPlayerUtils
 	{
 		private Socket _udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 		private Socket _tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -77,7 +77,7 @@ namespace UDP
 				lock (vecLock)
 				{
 					RFIDSpace_position.x = keyvalpair.Value.x;
-					RFIDSpace_position.y = keyvalpair.Value.z;
+					RFIDSpace_position.y = 0;
 					RFIDSpace_position.z = keyvalpair.Value.y;
 				}
 			
@@ -86,13 +86,17 @@ namespace UDP
 	
 		}
 
-		public void Start()
+		protected override void Start()
 		{
+			base.Start();
+
 			if (PlayerType.ID != 1)
 				return;
 
-			InitConnectionToRaspberryPI("172.17.4.58", 3300); // Initialize connection by sending a message to 3300 port
-			SendViaTCP("S 3301");
+			InitConnectionToRaspberryPI("192.168.0.131", 3300); // Initialize connection by sending a message to 3300 port
+
+			SendViaTCP("S 0001 3301");
+			//SendViaTCP("S 0002 3301");
 			ListenForData("127.0.0.1", 3301);  // Start listening on 3301
 			//cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			//cube1 = GameObject.CreatePrimitive(PrimitiveType.Cube);

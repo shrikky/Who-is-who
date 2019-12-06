@@ -1,4 +1,5 @@
 ﻿using MagicLeap;
+using MagicLeapInternal;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -18,13 +19,14 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 	private int _ongoingQueriesCount;
 	private PrivilegeRequester _privilegeRequester;
 	private MLPCF _closestPCF;
-	private GameObject closestPCFGameObject;
+	private GameObject _closestPCFGameObject;
 	protected PhotonView pv;
 	private GameObject NetworkUI;
 	public delegate void ObtainPCFsCallback();
 	public static event ObtainPCFsCallback OnPCFsObtained;
-	public string closestPCFCFUID;
 	public SocketConnection sockConnection;
+	private CFUID _closestPCFCFUID;
+
 	public static bool IsDebugMode
 	{
 		get; private set;
@@ -161,13 +163,7 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 
 	private void HandlePCFPositionQuery(MLResult result, MLPCF pcf)
 	{
-		//if (result.IsOk)
-		//{
-		//    // This is only for demonstration purposes because we want to track all the PCFs found.
-		//    // Ideally in a production app, we only wish to track PCFs that have virtual content
-		//    // bound to them - which is already automatically done by MLPersistentBehavior.
-		//    MLPersistentCoordinateFrames.QueueForUpdates(pcf);
-		//}
+
 		--_ongoingQueriesCount;
 	}
 
@@ -187,8 +183,6 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 			foreach(var pcf in PCFList)
 			{
 				result = MLPersistentCoordinateFrames.GetPCFPose(pcf, HandlePCFPositionQuery);
-				// HandlePCFPositionQuery could execute immediately (when the requested PCF has been requested before)
-				// or later (when the PCF is completely new).
 				if (!result.IsOk)
 				{
 					Debug.LogErrorFormat("Error: MLPersistentCoordinateFrames failed to get PCF position. Reason: {0}", result);
@@ -202,49 +196,55 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 		if (OnPCFsObtained != null)
 			OnPCFsObtained();
 
-		AssignClosestPCF();
+		FindClosestPCF();
 	}
 
-	private void AssignClosestPCF()
+	public void FindClosestPCF()
 	{
-		if(PCFList.Count <=0)
+		if (PhotonNetwork.IsMasterClient && pv.IsMine)
 		{
-			Debug.Log("No pcfs in the list");
+			MLPersistentCoordinateFrames.FindClosestPCF(Camera.main.transform.position, AssignClosestPCF);
 		}
-		_closestPCF = PCFList.Find(x => x.CFUID.ToString() == closestPCFCFUID);
-		if(_closestPCF == null)
-			Debug.Log("Cannot find the closestPCF");
-
-		MLPersistentCoordinateFrames.GetPCFPose(_closestPCF, AssignClosestPCF);
 	}
+
 	public void SetUserPosition(Vector3 vec)
-	{
-		if (closestPCFGameObject != null && NetworkUI!=null)
-		{
+	{//
+		//if (_closestPCFGameObject != null && NetworkUI!=null)
+		//{
 			NetworkUI.GetComponent<NetworkUISync>().SetUserPosition(vec);
-		}
-		else
-		{
-			Debug.Log("Closest PCF is not yet set for syncing positions");
-			if(NetworkUI == null)
-			{
-				Debug.Log("Finding Network UI");
-				NetworkUI = GameObject.FindObjectOfType<NetworkUISync>().gameObject;
-			}
-		}
+		//}
+		//else
+		//{
+		//	Debug.Log("Closest PCF is not yet set for syncing positions");
+		//	if(NetworkUI == null)
+		//	{
+		//		Debug.Log("Finding Network UI");
+		//		NetworkUI = GameObject.FindObjectOfType<NetworkUISync>().gameObject;
+		//	}
+		//}
 	}
+
 	private void AssignClosestPCF(MLResult result, MLPCF pcf)
+	{
+		MLPersistentCoordinateFrames.GetPCFPose(pcf, HandleClosestPCFQuery);	
+	}
+
+	private void HandleClosestPCFQuery(MLResult result, MLPCF pcf)
 	{
 		if (result.IsOk)
 		{
 			MLPersistentCoordinateFrames.QueueForUpdates(pcf);
 			_closestPCF = pcf;
-			closestPCFGameObject = new GameObject();
-			closestPCFGameObject.transform.position = _closestPCF.Position;
-			closestPCFGameObject.transform.rotation = _closestPCF.Orientation;
+			_closestPCFGameObject = new GameObject();
+			_closestPCFGameObject.transform.position = _closestPCF.Position;
+			_closestPCFGameObject.transform.rotation = _closestPCF.Orientation;
 			Debug.Log("Found closest PCF " + _closestPCF.Position + " " + _closestPCF.CFUID);
-			NetworkUI.GetComponent<NetworkUISync>().closestPCFGameobject = closestPCFGameObject;
+			NetworkUI.GetComponent<NetworkUISync>().closestPCFGameobject = _closestPCFGameObject;
+
+			if (PhotonNetwork.IsMasterClient)
+				pv.RPC("SyncClosestPCF", RpcTarget.OthersBuffered, _closestPCF.CFUID);
 		}
+
 	}
 
 	private void OnDestroy()
@@ -325,6 +325,25 @@ public class NetworkPCFPersistence : MonoBehaviour, IPunObservable
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
+
+	}
+
+	[PunRPC]
+	public void SyncClosestPCF(CFUID id)
+	{
+		_closestPCFCFUID = id;
+		Debug.Log("Trying to sync " + _closestPCFCFUID + " " + _closestPCFCFUID.ToGuid());
+
+		if (_closestPCFCFUID == null)
+		{
+			Debug.Log("Closest PCFID is null");
+		}
+		if (_closestPCFGameObject != null)
+			return;
+
+		Debug.Log("List Size " + PCFList.Count);
+		_closestPCF = PCFList.Find(x => x.CFUID == _closestPCFCFUID);
+		MLPersistentCoordinateFrames.GetPCFPose(_closestPCF, HandleClosestPCFQuery);
 
 	}
 }

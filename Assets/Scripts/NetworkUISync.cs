@@ -25,6 +25,7 @@ public class NetworkUISync : MonoBehaviour, IPunObservable
 		lock (outgoingData)
 		{
 			UI.transform.position = vec;
+			//FindPlane.UpdatePosition(this.transform);
 			_outgoingUserPos = closestPCFGameobject.transform.TransformPoint(vec);
 		}
 	}

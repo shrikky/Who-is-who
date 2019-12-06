@@ -36,5 +36,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - OnTogglePCFRecvd
   - SpawnPCFVisual
+  - SyncClosestPCF
   DisableAutoOpenWizard: 1
   ShowSettings: 1
